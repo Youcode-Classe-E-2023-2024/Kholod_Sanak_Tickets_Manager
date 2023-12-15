@@ -8,6 +8,6 @@
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));
   // URL Root
-  define('URLROOT', '_YOUR_URL_');
+  define('URLROOT', 'http://localhost/Kholod_Sanak_Tickets_Manager/public');
   // Site Name
   define('SITENAME', '_YOUR_SITENAME_');
