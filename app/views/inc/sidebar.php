@@ -16,7 +16,7 @@
     <div class="fixed flex flex-col top-0 left-0 w-64 bg-white h-full border-r">
         <div class="flex items-center justify-center h-14 border-b">
       
-                <img src="<?php echo URLROOT;?>\img\logo.png"  alt="Logo"  class="w-20 h-10 mt-1.5	lg:w-40 h-30">
+                <img src="<?php echo URLROOT;?>\public\img\logo.png"  alt="Logo"  class="w-20 h-10 mt-1.5	lg:w-40 h-30">
 
         </div>
         <div class="overflow-y-auto overflow-x-hidden flex-grow">
