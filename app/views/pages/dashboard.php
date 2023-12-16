@@ -9,14 +9,11 @@
 </head>
 <body >
 
-<div class="bg-white p-8 rounded-md w-full">
+<div class="absolute bg-white p-8 rounded-md  w-fit right-0">
     <div class=" flex items-center justify-end pb-6">
-        <div class="flex items-center justify-between">
-
             <div class="lg:ml-40 ml-10 space-x-8">
-                <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Ticket</button>
+                <button class="bg-blue-500 hover:bg-blue-700  px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Ticket</button>
             </div>
-        </div>
     </div>
     <div>
         <div class="flex items-center justify-end">
@@ -81,7 +78,7 @@
                             </div>
                         </td>
                         <td class="px-5 py-5 bg-white text-sm">
-                            <a href="a" class="text-gray-900 hover:underline">
+                            <a href=ticket.php?id=" class="text-gray-900 hover:underline">
                                 <p class="text-gray-900 whitespace-no-wrap">Admin</p>
                             </a>
                         </td>
@@ -253,12 +250,12 @@
                         </span>
                     <div class="inline-flex mt-2 xs:mt-0">
                         <button
-                                class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
+                                class="text-sm text-indigo-50 transition duration-150 bg-blue-500 hover:bg-blue-700 font-semibold py-2 px-4 rounded-l">
                             Prev
                         </button>
                         &nbsp; &nbsp;
                         <button
-                                class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
+                                class="text-sm text-indigo-50 transition duration-150 bg-blue-500 hover:bg-blue-700  font-semibold py-2 px-4 rounded-r">
                             Next
                         </button>
                     </div>

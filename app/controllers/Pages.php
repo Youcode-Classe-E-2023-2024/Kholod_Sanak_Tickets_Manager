@@ -5,18 +5,19 @@
     }
     
     public function index(){
-      $data = [
-        'title' => 'TicketManager',
-      ];
+
      
-      $this->view('pages/index', $data);
+      $this->view('pages/index');
     }
 
-    public function about(){
-      $data = [
-        'title' => 'About Us'
-      ];
+    public function ticket_form(){
 
-      $this->view('pages/about', $data);
+
+      $this->view('pages/ticket_form');
     }
+      public function ticket(){
+
+
+          $this->view('pages/ticket');
+      }
   }
