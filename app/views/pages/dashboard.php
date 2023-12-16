@@ -80,8 +80,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                        <td class="px-5 py-5 bg-white text-sm">
+                            <a href="a" class="text-gray-900 hover:underline">
+                                <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            </a>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
@@ -138,8 +140,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Editor</p>
+                        <td class="px-5 py-5 bg-white text-sm">
+                            <a href="a" class="text-gray-900 hover:underline">
+                                <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            </a>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
@@ -197,7 +201,9 @@
                             </div>
                         </td>
                         <td class="px-5 py-5 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            <a href="a" class="text-gray-900 hover:underline">
+                                <p class="text-gray-900 whitespace-no-wrap">Admin</p>
+                            </a>
                         </td>
                         <td class="px-5 py-5 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">Jan 18, 2020</p>
