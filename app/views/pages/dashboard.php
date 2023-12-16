@@ -103,10 +103,16 @@
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<span
-                                            class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                            class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
                                         <span aria-hidden
-                                              class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-									<span class="relative">Done</span>
+                                              class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+									     <div class="flex">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-blue-500">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v6h-2zm0 4h2v2h-2z"/>
+                                            </svg>
+
+                                            <span class="relative ml-2">Low</span>
+                                         </div>
 									</span>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -159,8 +165,12 @@
                                            class="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                                         <span aria-hidden
                                               class="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
-
-									<span class="relative">In Progress</span>
+                                       <div class="flex">
+                                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-yellow-500">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v6h-2zm0 4h2v2h-2z"/>
+                                        </svg>
+                                        <span class="relative ml-2">Medium</span>
+                                            </div>
 									</span>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -208,7 +218,13 @@
                                             class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                         <span aria-hidden
                                               class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-									<span class="relative">TO DO</span>
+									    <div class="flex">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-red-900">
+                                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v6h-2zm0 4h2v2h-2z"/>
+                                           </svg>
+                                        <span class="relative ml-2"> High</span>
+                                        </div>
+
 									</span>
                         </td>
                         <td class="px-5 py-5 bg-white text-sm">
