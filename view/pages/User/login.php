@@ -14,11 +14,11 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form action="" method="post">
+<form action="../../../controller/User/login.php" method="post">
     <h3>Login Here</h3>
 
-    <label for="username">Username</label>
-    <input type="text" name="username" placeholder="Username" id="username">
+    <label for="username">Email</label>
+    <input type="text" name="email" placeholder="Email" id="email">
 
     <label for="password">Password</label>
     <input type="password" name="password" placeholder="Password" id="password">
