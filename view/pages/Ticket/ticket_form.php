@@ -1,3 +1,7 @@
+<?php
+require_once "../../../model/User.php";
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,14 +36,19 @@
                             <div class="md:col-span-3">
                                 <label for="assignee">Add Assignee</label>
                                 <select
-                                    id="assignee"
-                                    name="assignee"
-                                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                >
-                                    <!-- Options Of Assignee -->
-                                    <option value="Assignee 1">Assignee 1</option>
-                                    <option value="Assignee 2">Assignee 2</option>
-                                    <option value="Assignee 3">Assignee 3</option>
+                                        id="assignee"
+                                        name="assignee"
+                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 select2" >
+                                    <!-- Fetch and display assignees from the database -->
+                                    <?php
+                                    $userModel = new User();
+                                    $assignees = $userModel->getAllUsers();
+                                    var_dump($assignees);
+
+                                    foreach ($assignees as $assignee) {
+                                        echo '<option value="' . $assignee->username . '">' . $assignee->username . '</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                             <!-- Due Date -->
@@ -57,9 +66,9 @@
                                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 >
                                     <!-- Options Of Priority -->
-                                    <option >Priority 1</option>
-                                    <option >Priority 2</option>
-                                    <option >Priority 3</option>
+                                    <option >Urgent</option>
+                                    <option >Medium </option>
+                                    <option >Low</option>
                                 </select>
                             </div>
                             <!-- Status -->
@@ -71,9 +80,9 @@
                                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                 >
                                     <!-- Options Of Priority -->
-                                    <option >Status 1</option>
-                                    <option >Status 2</option>
-                                    <option >Status 3</option>
+                                    <option >To do</option>
+                                    <option >In Progress</option>
+                                    <option >Done</option>
                                 </select>
                             </div>
                             <!-- Form Description -->
