@@ -21,6 +21,7 @@
                     </div>
                     <!-- Form Title -->
                     <div class="lg:col-span-2">
+                      <form action="../../../controller/Ticket/add_ticket.php" method="POST">
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                             <div class="md:col-span-5">
                                 <label for="title">Title</label>
@@ -88,12 +89,13 @@
                             </div>
 
                         </div>
+                      </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <a href="dashboard.php"  class="md:absolute bottom-0 right-0 p-4 float-right">
+        <a href="../../inc/sidebar.php"  class="md:absolute bottom-0 right-0 p-4 float-right">
             <img src="../../../img/logo.png" alt="back to dashboard" class="transition-all rounded-full w-14 -rotate-45 hover:shadow-sm shadow-lg ring hover:ring-4 ring-white">
         </a>
     </div>
