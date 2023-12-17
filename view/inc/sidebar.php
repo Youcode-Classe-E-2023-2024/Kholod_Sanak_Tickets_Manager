@@ -10,6 +10,7 @@ require_once "../pages/Ticket/dashboard.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
+    <link rel="stylesheet" href="../../css/profile.css">
 
 
 </head>
@@ -53,12 +54,16 @@ require_once "../pages/Ticket/dashboard.php";
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
-              <span class="inline-flex justify-center items-center ml-4">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-              </span>
+                    <!-- Profile -->
+                    <a id="profileLink" href="#" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6">
+                <span class="inline-flex justify-center items-center ml-4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </span>
                         <span class="ml-2 text-sm tracking-wide truncate">Profile</span>
                     </a>
+
                 </li>
 
                 <li>
@@ -75,7 +80,35 @@ require_once "../pages/Ticket/dashboard.php";
             </ul>
         </div>
     </div>
+
+    <div class="grow ">
+        <div id="profileContent" class="p-5 ">
+        </div>
+    </div>
 </div>
-</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a#profileLink").click(function (e) {
+            e.preventDefault();
+
+            // Load profile content dynamically using AJAX
+            $.ajax({
+                url: 'profile.php',
+                type: 'GET',
+                success: function (data) {
+                    // Update the profile content area with the loaded data
+                    $('#profileContent').html(data);
+                },
+                error: function () {
+                    alert('Error loading profile content.');
+                }
+            });
+        });
+    });
+</script>
+
+
 </body>
 </html>
