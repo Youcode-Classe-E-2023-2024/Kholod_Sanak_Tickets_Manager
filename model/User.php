@@ -60,24 +60,33 @@ class User {
 
     ///////////////////////////////////  Login  ///////////////////////////////////////////////////
     ///
-    public function login($email, $password){
+    /**
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public function login($email, $password) {
         $this->db->query("SELECT * FROM user WHERE user_email = :email");
         $this->db->bind(':email', $email);
 
         $row = $this->db->single();
 
-        if($row) {
+        if ($row) {
             $hashedPasswordFromDatabase = $row->password;
-            if (password_verify($password, $hashedPasswordFromDatabase)) {
-                return true;
-            } else {
-                return false;
 
+            if (password_verify($password, $hashedPasswordFromDatabase)) {
+                // Login successful
+                return ['success' => true, 'user_id' => $row->id_user];
+            } else {
+                // Incorrect password
+                return ['success' => false, 'error' => 'Incorrect password'];
             }
         } else {
-            return false;
+            // User not found
+            return ['success' => false, 'error' => 'User not found'];
         }
     }
+
 
 
 }
