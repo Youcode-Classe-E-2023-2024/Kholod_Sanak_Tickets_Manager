@@ -29,7 +29,7 @@ class User {
 
 
 
-    ///////////////////////////////////  Register  ///////////////////////////////////////////////////
+    ///////////////////////////////////  Find user by mail  ///////////////////////////////////////////////////
     ///
     public function findUserByEmail($email) {
         $this->db->query("SELECT * FROM user WHERE user_email = :email");
@@ -56,9 +56,28 @@ class User {
         } else {
             return false;
         }
+   }
 
+    ///////////////////////////////////  Login  ///////////////////////////////////////////////////
+    ///
+    public function login($email, $password){
+        $this->db->query("SELECT * FROM user WHERE user_email = :email");
+        $this->db->bind(':email', $email);
 
-}
+        $row = $this->db->single();
+
+        if($row) {
+            $hashedPasswordFromDatabase = $row->password;
+            if (password_verify($password, $hashedPasswordFromDatabase)) {
+                return true;
+            } else {
+                return false;
+
+            }
+        } else {
+            return false;
+        }
+    }
 
 
 }
