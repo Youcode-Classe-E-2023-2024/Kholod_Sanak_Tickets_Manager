@@ -3,15 +3,14 @@ require_once "../../model/User.php";
 
 $userModel = new User();
 
+// Initialize error variables
+$username_err = $email_err = $password_err = $upload_err = "";
+
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $photo = $_FILES['profile_picture'];
-
-
-    // Initialize error variables
-    $username_err = $email_err = $password_err = $upload_err = "";
 
     // Validate username
     if (empty($username)) {
@@ -37,28 +36,25 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         $password = password_hash($password, PASSWORD_DEFAULT);
 
         // Move uploaded file to a permanent location (you may need to adjust the path)
-
         $uploadDir = "../../uploads/";
         $uploadFile = $uploadDir . basename($photo['name']);
 
         if (move_uploaded_file($photo['tmp_name'], $uploadFile)) {
             if ($userModel->findUserByEmail($email)) {
                 $email_err = "Email already exists";
-                include_once "../../view/pages/User/register.php";
             } else {
                 if ($userModel->register($username, $email, $password, $uploadFile)) {
                     header("location:../../view/pages/User/login.php?success");
+                    exit();
                 } else {
                     header("location:../../view/pages/User/register.php?error");
+                    exit();
                 }
             }
-        } else {
-            // Handle file upload error
-            $upload_err = "File upload failed!";
-            include_once "../../view/pages/User/register.php";
         }
-    } else {
-        // If there are validation errors, include the registration form with errors
-        include_once "../../view/pages/User/register.php";
     }
 }
+
+// Display the form and errors on the same page
+header("location:../../view/pages/User/register.php");
+exit();
