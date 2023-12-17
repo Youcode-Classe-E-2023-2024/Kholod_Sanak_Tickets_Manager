@@ -12,7 +12,9 @@
 <div class="absolute bg-white p-8 rounded-md  w-fit top-0 right-0">
     <div class=" flex items-center justify-end pb-6">
         <div class="lg:ml-40 ml-10 space-x-8">
-            <button class="bg-blue-500 hover:bg-blue-700  px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Ticket</button>
+            <form action="../pages/Ticket/ticket_form.php" method="get">
+                <button class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer" type="submit">New Ticket</button>
+            </form>
         </div>
     </div>
     <div>

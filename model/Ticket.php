@@ -26,4 +26,37 @@ class Ticket {
         $this->db->query($query);
         $this->db->execute();
     }
+
+    ////////////////////////////////     Add  ticket     ////////////////////////////////////////////
+    ///
+    public function addTicket($title, $description, $priority, $status, $dateTicket, $dueDate, $assignee, $userId) {
+        $this->db->query("INSERT INTO ticket (title, description, priority, status, date_ticket, due_date, assignee, user_id) 
+                      VALUES (:title, :description, :priority, :status, :dateTicket, :dueDate, :assignee, :userId)");
+
+        $this->db->bind(':title', $title);
+        $this->db->bind(':description', $description);
+        $this->db->bind(':priority', $priority);
+        $this->db->bind(':status', $status);
+        $this->db->bind(':dateTicket', $dateTicket);
+        $this->db->bind(':dueDate', $dueDate);
+        $this->db->bind(':assignee', $assignee);
+        $this->db->bind(':userId', $userId);
+
+        return $this->db->execute();
+    }
+
+    /////////////////////////////////     Assign ticket     ////////////////////////////////////////////
+    ///
+
+    public function assignTicket($ticketId, $newAssignee) {
+        $this->db->query("UPDATE ticket SET assignee = :assignee WHERE id_ticket = :ticketId");
+
+        $this->db->bind(':assignee', $newAssignee);
+        $this->db->bind(':ticketId', $ticketId);
+
+        return $this->db->execute();
+    }
+
+
+
 }
