@@ -1,8 +1,6 @@
 <?php
-
 require_once(__DIR__ . '/../config/Database.php');
-
-class Comment {
+class TicketTagAssociation {
     private $db;
 
     public function __construct() {
@@ -10,13 +8,12 @@ class Comment {
     }
 
     public function setupTable() {
-        $query = "CREATE TABLE IF NOT EXISTS comment (
-            id_cmt INT AUTO_INCREMENT PRIMARY KEY,
-            comment VARCHAR(500) NOT NULL,
+        $query = "CREATE TABLE IF NOT EXISTS ticket_tag (
             ticket_id INT,
-            user_id INT,
+            tag_id INT,
+            PRIMARY KEY (ticket_id, tag_id),
             FOREIGN KEY (ticket_id) REFERENCES ticket(id_ticket),
-            FOREIGN KEY (user_id) REFERENCES user(id_user)
+            FOREIGN KEY (tag_id) REFERENCES tag(id_tag)
         )";
 
         $this->db->query($query);
