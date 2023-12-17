@@ -19,4 +19,15 @@ class TicketTagAssociation {
         $this->db->query($query);
         $this->db->execute();
     }
+
+    /**
+     * @param $ticketId
+     * @return mixed
+     */
+    public function getTagsForTicket($ticketId) {
+        $this->db->query("SELECT tag_id FROM ticket_tag WHERE ticket_id = :ticketId");
+        $this->db->bind(':ticketId', $ticketId);
+
+        return $this->db->resultSet();
+    }
 }
