@@ -27,40 +27,38 @@ class User {
         $this->db->execute();
     }
 
-    // Getter methods
-    public function getUsername() {
-    return $this->username;
+
+
+    ///////////////////////////////////  Register  ///////////////////////////////////////////////////
+    ///
+    public function findUserByEmail($email) {
+        $this->db->query("SELECT * FROM user WHERE user_email = :email");
+        $this->db->bind(':email', $email);
+        $this->db->execute();
+        $row = $this->db->single();
+
+        return ($row) ? true : false;
     }
 
-    public function getUserEmail() {
-    return $this->user_email;
-    }
+    ///////////////////////////////////  Register  ///////////////////////////////////////////////////
+    ///
+    public function register($username, $email, $password, $photo)
+    {
+        $this->db->query("INSERT INTO user (username, user_email, password, user_picture) 
+                      VALUES (:username, :email, :password, :photo)");
+        $this->db->bind(':username', $username);
+        $this->db->bind(':email', $email);
+        $this->db->bind(':password', $password);
+        $this->db->bind(':photo', $photo);
 
-    public function getPassword() {
-    return $this->password;
-    }
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
 
-    public function getUserPicture() {
-    return $this->user_picture;
-    }
 
-    // Setter methods
-    public function setUsername($username) {
-    $this->username = $username;
-    }
-
-    public function setUserEmail($user_email) {
-    $this->user_email = $user_email;
-    }
-
-    public function setPassword($password) {
-    $this->password = $password;
-    }
-
-    public function setUserPicture($user_picture) {
-    $this->user_picture = $user_picture;
-    }
-
+}
 
 
 }
