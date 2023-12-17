@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         // You might want to set session variables or redirect the user to the dashboard
         session_start();
         $_SESSION['email'] = $email;
-        header("location: ../../view/pages/Ticket/dashboard.php");
+        header("location: ../../view/inc/sidebar.php");
         exit();
     } else {
         // Login failed
