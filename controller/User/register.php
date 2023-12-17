@@ -44,6 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
                 $email_err = "Email already exists";
             } else {
                 if ($userModel->register($username, $email, $password, $uploadFile)) {
+                    session_start();
+                    $_SESSION['email'] = $email;
                     header("location:../../view/pages/User/login.php?success");
                     exit();
                 } else {
