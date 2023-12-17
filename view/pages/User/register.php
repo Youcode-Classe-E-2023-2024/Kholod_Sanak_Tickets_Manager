@@ -13,7 +13,7 @@
     <div class="shape"></div>
     <div class="shape"></div>
 </div>
-<form action="" method="post" enctype="multipart/form-data">
+<form action="../../../controller/User/register.php" method="post" enctype="multipart/form-data">
     <h3>Register Here</h3>
 
     <div class="flex w-full h-screen items-center justify-center bg-grey-lighter">
@@ -22,15 +22,27 @@
             <input type="file" name="profile_picture" class="hidden" accept="image/*" />
         </label>
     </div>
+    <?php if (!empty($upload_err)) : ?>
+        <div class="error"><?php echo $upload_err; ?></div>
+    <?php endif; ?>
 
     <label for="username">Username</label>
     <input type="text" name="username" placeholder="Username" id="username">
+    <?php if (!empty($username_err)) : ?>
+        <div class="error"><?php echo $username_err; ?></div>
+    <?php endif; ?>
 
     <label for="email">Email</label>
     <input type="text" name="email" placeholder="Email" id="email">
+    <?php if (!empty($email_err)) : ?>
+        <div class="error"><?php echo $email_err; ?></div>
+    <?php endif; ?>
 
     <label for="password">Password</label>
     <input type="password" name="password" placeholder="Password" id="password">
+    <?php if (!empty($password_err)) : ?>
+        <div class="error"><?php echo $password_err; ?></div>
+    <?php endif; ?>
 
     <button type="submit">Register</button>
 </form>
