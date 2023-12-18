@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         session_start();
         $_SESSION['email'] = $email;
         $_SESSION['id_user'] = $loginResult['user_id'];
-        header("location: ../../view/inc/sidebar.php");
+        header("location: ../Ticket/display_tickets.php");
         exit();
     } else {
         // Login failed

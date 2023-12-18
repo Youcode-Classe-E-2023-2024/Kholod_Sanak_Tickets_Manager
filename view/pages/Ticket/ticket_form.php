@@ -1,5 +1,9 @@
 <?php
 require_once "../../../model/User.php";
+require_once "../../../model/Tag.php";
+require_once "../../../model/TicketTagAssociation.php";
+
+
 
 ?>
 <!doctype html>
@@ -43,9 +47,10 @@ require_once "../../../model/User.php";
                                     <?php
                                     $userModel = new User();
                                     $assignees = $userModel->getAllUsers();
-                                    var_dump($assignees);
+                                    //var_dump($assignees);
 
                                     foreach ($assignees as $assignee) {
+
                                         echo '<option value="' . $assignee->username . '">' . $assignee->username . '</option>';
                                     }
                                     ?>
@@ -63,7 +68,7 @@ require_once "../../../model/User.php";
                                 <select
                                     id="priority"
                                     name="priority"
-                                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 "
                                 >
                                     <!-- Options Of Priority -->
                                     <option >Urgent</option>
@@ -85,6 +90,27 @@ require_once "../../../model/User.php";
                                     <option >Done</option>
                                 </select>
                             </div>
+                            <!-- Tags -->
+                            <div class="md:col-span-5">
+                                <label for="tag">Tags</label>
+                                <select
+                                        id="tag"
+                                        name="tag"
+
+                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 select2"
+                                >
+                                    <?php
+                                    $tagModel = new Tag();
+                                    $tags = $tagModel->getAllTags();
+
+                                    // Loop through tags and create options
+                                    foreach ($tags as $tag) {
+                                        echo '<option value="' . $tag->id_tag . '">' . $tag->libelle . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
                             <!-- Form Description -->
                             <div class="md:col-span-5">
                                 <label for="description">Description</label>
@@ -104,7 +130,7 @@ require_once "../../../model/User.php";
             </div>
         </div>
 
-        <a href="../../inc/sidebar.php"  class="md:absolute bottom-0 right-0 p-4 float-right">
+        <a href="../../../controller/Ticket/display_tickets.php"  class="md:absolute bottom-0 right-0 p-4 float-right">
             <img src="../../../img/logo.png" alt="back to dashboard" class="transition-all rounded-full w-14 -rotate-45 hover:shadow-sm shadow-lg ring hover:ring-4 ring-white">
         </a>
     </div>

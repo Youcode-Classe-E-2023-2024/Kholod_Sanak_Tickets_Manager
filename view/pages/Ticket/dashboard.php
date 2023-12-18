@@ -80,7 +80,7 @@
                                 </div>
                             </td>
                             <td class="px-5 py-5 bg-white text-sm">
-                                <a href=ticket.php?id=" class="text-gray-900 hover:underline">
+                                <a href="#" class="text-gray-900 hover:underline">
                                     <p class="text-gray-900 whitespace-no-wrap">Admin</p>
                                 </a>
                             </td>

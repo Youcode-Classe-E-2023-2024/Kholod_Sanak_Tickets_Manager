@@ -87,6 +87,18 @@ class User {
         }
     }
 
+    ////////////////////////////       Get all users          //////////////////////////////////////////
+    ///
+    public function getAllUsers()
+    {
+        $query = "SELECT * FROM user";
+        $this->db->query($query);
+        return $this->db->resultSet();
+    }
+
+
+
+
 
 
 }

@@ -66,6 +66,12 @@ class Database
         $this->stmt->bindValue($param, $value, $type);
     }
 
+    public function bindMultiple($params) {
+        foreach ($params as $param) {
+            $this->bind($param[0], $param[1]);
+        }
+    }
+
     // Execute the prepared statement
     public function execute()
     {
@@ -90,5 +96,9 @@ class Database
     public function rowCount()
     {
         return $this->stmt->rowCount();
+    }
+
+    public function lastInsertId() {
+        return $this->dbh->lastInsertId();
     }
 }

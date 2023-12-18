@@ -30,4 +30,18 @@ class TicketTagAssociation {
 
         return $this->db->resultSet();
     }
+
+
+    ///////////////////////       Assign Tags to Ticket          ///////////////////////////////////
+    public function assignTagsToTicket1($ticketId, $tagIds) {
+        $query = "INSERT INTO ticket_tag (ticket_id, tag_id) VALUES (:ticketId, :tagId)";
+        $this->db->query($query);
+
+        foreach ($tagIds as $tagId) {
+            $this->db->bind(':ticketId', $ticketId);
+            $this->db->bind(':tagId', $tagId);
+            $this->db->execute();
+        }
+    }
+
 }

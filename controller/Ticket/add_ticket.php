@@ -1,17 +1,20 @@
 <?php
-
 require_once '../../config/Database.php';
 require_once "../../model/Ticket.php";
-session_start();
+require_once "../../model/Tag.php";
+require_once "../../model/Ticket.php";
 
+
+session_start();
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Instantiate the Ticket class
+    // Instantiate the Ticket and Tag classes
     $ticketManager = new Ticket();
+    $tagManager = new Tag();
 
-    // Setup the ticket table if not exists
-    $ticketManager->setupTable();
+    //$ticketManager->setupTable();
+    //$tagManager->setupTable();
 
     // Get form data
     $title = $_POST['title'];
@@ -21,11 +24,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dateTicket = date('Y-m-d H:i:s');
     $dueDate = $_POST['due_date'];
     $assignee = $_POST['assignee'];
-    $userId = $_SESSION['id_user'] ;
+    $userId = $_SESSION['id_user'];
 
     // Add the ticket
-    if ($ticketManager->addTicket($title, $description, $priority, $status, $dateTicket, $dueDate, $assignee, $userId)) {
-        // Ticket added successfully
+    $ticketId = $ticketManager->addTicket($title, $description, $priority, $status, $dateTicket, $dueDate, $assignee, $userId);
+
+    if ($ticketId) {
+
+        // Get selected tags from the form
+        $selectedTags = isset($_POST['tag']) ? $_POST['tag'] : [];
+        var_dump($selectedTags);
+
+        // Assign tags to the newly added ticket
+        $tagManager->assignTagsToTicket($ticketId, $selectedTags);
+
+
         header("location: ../../view/inc/sidebar.php");
         exit();
     } else {

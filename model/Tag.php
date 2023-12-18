@@ -1,6 +1,8 @@
 <?php
 
 require_once(__DIR__ . '/../config/Database.php');
+require_once 'TicketTagAssociation.php';
+
 class Tag {
     private $db;
 
@@ -19,7 +21,6 @@ class Tag {
         $this->db->query($query);
         $this->db->execute();
 
-        // Add default tags
         $defaultTags = ['documentation', 'bug', 'question', 'invalid', 'enhancement', 'help wanted'];
 
         foreach ($defaultTags as $tag) {
@@ -34,4 +35,73 @@ class Tag {
         $this->db->bind(':tagName', $tagName);
         $this->db->execute();
     }
+    /// get all tags
+    ///
+    public function getAllTags()
+    {
+        $this->db->query("SELECT * FROM tag");
+        return $this->db->resultSet();
+    }
+
+   ///////////////////// Assign Tags
+    ///
+    //////////////////////////////       Assign Tags to Ticket          ///////////////////////////////////
+
+    public function assignTagsToTicket($ticketId, $selectedTags) {
+
+
+        foreach ($selectedTags as $tagId) {
+            $query = "INSERT INTO ticket_tag (ticket_id, tag_id)
+                      SELECT t.id_ticket, tt.id_tag
+                      FROM ticket t
+                      JOIN tag tt ON tt.id_tag = :tagId
+                      WHERE t.id_ticket = :ticketId";
+
+            // Debugging statement
+            echo "Debugging: SQL Query: " . $query . "<br>";
+
+            // Execute the query with proper bindings
+            $this->db->query($query);
+            $this->db->bind(':ticketId', $ticketId);
+            $this->db->bind(':tagId', $tagId);
+            $this->db->execute();
+        }
+
+        // Debugging statement
+        echo "Debugging: Tags assigned successfully<br>";
+
+        // Return some indication of success (if applicable)
+        return "Tags assigned successfully";
+    }
+
+
+    ///////////////////////////              Get tags             /////////////////////////////////////////
+    ///
+    public function getTagsForTicket($ticketId) {
+
+
+            $query = "SELECT tag.* FROM tag
+                  JOIN ticket_tag ON tag.id_tag = ticket_tag.tag_id
+                  WHERE ticket_tag.ticket_id = :ticketId";
+
+            $this->db->query($query);
+            $this->db->bind(':ticketId', $ticketId);
+
+            // Debugging statement
+            echo "Debugging: Binding ticketId: " . $ticketId . "<br>";
+
+            $result = $this->db->resultSet();
+            // Debugging statement
+            echo "Debugging: Result from the database:<br>";
+            var_dump($result);
+
+            return $result;
+        }
+
+
+
+
+
+
+
 }
