@@ -97,14 +97,18 @@ class Ticket {
 
 
     //////////////////////////////         Get Ticket tags        /////////////////////////:////////////////
+
+
+    /////
     public function getTags($ticketId) {
         $ticketTagAssociation = new TicketTagAssociation();
 
         $tags = $ticketTagAssociation->getTagsForTicket($ticketId);
-        var_dump($tags);
+       // print_r($tags);
         return $tags;
 
     }
+
 
 
 
