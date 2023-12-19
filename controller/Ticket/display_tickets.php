@@ -92,12 +92,13 @@ $tickets = $ticketModel->getTickets();
 
                             // Fetch tags for the current ticket
                             $tags = $ticketModel->getTags($ticketId);
+                            //var_dump($tags);
 
                             // Display tags
                             foreach ($tags as $tag) {
                                 echo '<span class="relative inline-block px-3 py-1 font-semibold text-cyan-900 leading-tight">
                     <span aria-hidden class="absolute inset-0 bg-cyan-200 opacity-50 rounded-full"></span>
-                    <span class="relative">' . $tag->libelle . '</span>
+                    <span class="relative">' . $tag->tag_id . '</span>
               </span>';
                             }
                             ?>
