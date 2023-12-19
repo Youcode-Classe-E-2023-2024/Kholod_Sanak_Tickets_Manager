@@ -1,5 +1,7 @@
 <?php
 require_once "../../model/Ticket.php";
+require_once "../../model/User.php";
+
 require_once "../../view/inc/sidebar.php";
 
 
@@ -19,6 +21,8 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 <body class="h-screen overflow-hidden flex items-center justify-center">
 <main class="flex w-full h-full shadow-lg rounded-3xl ">
@@ -95,7 +99,7 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
                 </div>
                 <div class="flex flex-col">
                     <h3 class="font-semibold text-lg">Creator</h3>
-                    <p class="text-light text-gray-400"><?php echo $ticketDetails['creator_email']; ?></p>
+                    <p class="text-light text-gray-400"><?php echo $ticketDetails['user_id']; ?> </p>
                 </div>
             </div>
             <div>
@@ -110,37 +114,76 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
             </div>
         </div>
         <!-- Header End  -->
+        <!-- Comment section -->
 
-        <ul class="mt-6">
-            <li class="py-5 border-b px-3 transition hover:bg-indigo-100">
-                <a href="#" class="flex justify-between items-center">
-                    <h3 class="text-lg font-semibold">user 1</h3>
-                    <p class="text-md text-gray-400">23m ago</p>
-                </a>
-                <div class="text-md italic text-gray-400">Comment1!</div>
-            </li>
-            <li class="py-5 border-b px-3 transition hover:bg-indigo-100">
-                <a href="#" class="flex justify-between items-center">
-                    <h3 class="text-lg font-semibold">user 1</h3>
-                    <p class="text-md text-gray-400">23m ago</p>
-                </a>
-                <div class="text-md italic text-gray-400">Comment1!</div>
-            </li>
-            <li class="py-5 border-b px-3 transition hover:bg-indigo-100">
-                <a href="#" class="flex justify-between items-center">
-                    <h3 class="text-lg font-semibold">user 1</h3>
-                    <p class="text-md text-gray-400">23m ago</p>
-                </a>
-                <div class="text-md italic text-gray-400">Comment1!</div>
-            </li>
-
-        </ul>
+       <div class="comment-section">
+           <div class="comment"></div>
+       </div>
     </section>
-
     <!--   End Right  section  -->
-
-
 </main>
+<script>
+    let commentSection = document.querySelector('#comment-section');
+    let commentInput = document.querySelector('#comment');
+
+    function ajaxCall(commentValue, userValue, ticketValue) {
+        $.ajax({
+            type: 'POST',
+            url: '../Comment/create_comment.php',
+            data: {
+                comment: commentValue,
+                user_id: userValue,
+                ticket_id: ticketValue,
+            },
+            success: function(data) {
+                    try {
+                        commentsData = JSON.parse(data);
+                        console.log(commentsData);
+
+                console.log(commentsData);
+                commentSection.innerHTML = "";
+                for (let i = 0; i < commentsData.length; i++) {
+                    commentText = commentsData[i].comment;
+                    commentCreator = commentsData[i].user;
+                    picture = commentsData[i].picture;
+                    commentSection.innerHTML += `
+                    <div class="flex p-2">
+                        <img src="${picture}"
+                            class="h-10 w-10 rounded-full mr-2 object-cover border-2 border-yellow-500" />
+                        <div>
+                            <h1 class="font-bold text-gray-700 text-sm">${commentCreator}</h1>
+                            <!-- Comment Content Section -->
+                            <p class="text-gray-700">
+                                ${commentText}
+                            </p>
+                        </div>
+                    </div>`;
+                }
+                    } catch (e) {
+                        console.error('Error parsing JSON:', e);
+                        console.log('Response:', data);
+                    }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX call failed with status ' + status + ': ' + error);
+            }
+        });
+    }
+
+    $('#commentForm').submit(function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        // Call the ajaxCall function
+        ajaxCall($('#comment').val(), $('#user_id').val(), $('#ticket_id').val());
+        commentInput.value = "";
+    });
+
+    // Call ajaxCall immediately
+    ajaxCall();
+
+    setInterval(ajaxCall, 1000);
+</script>
+
 </body>
 </html>
 
