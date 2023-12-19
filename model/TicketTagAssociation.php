@@ -32,6 +32,9 @@ class TicketTagAssociation {
     }
 
 
+
+
+
     ///////////////////////       Assign Tags to Ticket          ///////////////////////////////////
     public function assignTagsToTicket1($ticketId, $tagIds) {
         $query = "INSERT INTO ticket_tag (ticket_id, tag_id) VALUES (:ticketId, :tagId)";
