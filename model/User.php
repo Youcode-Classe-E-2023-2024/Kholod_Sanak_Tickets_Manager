@@ -96,6 +96,15 @@ class User {
         return $this->db->resultSet();
     }
 
+    ///////////         get user
+    public function getUser($userId)
+    {
+        $query = "SELECT * FROM user WHERE id_user = :id";
+        $this->db->query($query);
+        $this->db->bind(':id', $userId);
+        return $this->db->single();
+    }
+
 
 
 
