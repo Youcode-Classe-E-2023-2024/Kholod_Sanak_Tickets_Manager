@@ -95,7 +95,7 @@ require_once "../../../model/TicketTagAssociation.php";
                                 <label for="tag">Tags</label>
                                 <select
                                         id="tag"
-                                        name="tag"
+                                        name="tag[]"
 
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 select2"
                                 >
