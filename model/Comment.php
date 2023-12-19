@@ -22,28 +22,39 @@ class Comment {
         $this->db->query($query);
         $this->db->execute();
     }
-    /////////////////////////////////////  Display comment  ///////////////////////////////////////////////
-    function displayComments()
-    {
-        $sql = "SELECT comment.*, user.* FROM comment
-                INNER JOIN user ON comment.user_id=user.user_id
-                WHERE ticket_id=?";
-        $this->db->query($sql);
-        $this->db->bind(1, $this->ticket_id, PDO::PARAM_INT);
+    /////////////////////////////////////  Display comment for a ticket  ///////////////////////////////////////////////
+    public function getCommentsForTicket($ticketId) {
+        $query = "SELECT * FROM comment WHERE ticket_id = :ticket_id";
+        $this->db->query($query);
+        $this->db->bind(':ticket_id', $ticketId);
         $this->db->execute();
-        $comments = $this->db->resultSet();
-        return $comments;
+
+        return $this->db->resultSet();
+    }
+
+    /////////////////////////////////////  Display user comment for a ticket  ///////////////////////////////////////////////
+
+    public function getCommentsForTicketByUser($ticketId, $userId) {
+        $query = "SELECT * FROM comment WHERE ticket_id = :ticket_id AND user_id = :user_id";
+        $this->db->query($query);
+        $this->db->bind(':ticket_id', $ticketId);
+        $this->db->bind(':user_id', $userId);
+        $this->db->execute();
+
+        return $this->db->resultSet();
     }
     /////////////////////////////////////  Create comment  ///////////////////////////////////////////////
 
-    function createComment()
-    {
-        $sql = "INSERT INTO comment (comment, ticket_id, user_id) VALUES (?, ?, ?)";
-        $this->db->query($sql);
-        $this->db->bind(1, $this->comment, PDO::PARAM_STR);
-        $this->db->bind(2, $this->ticket_id, PDO::PARAM_INT);
-        $this->db->bind(3, $this->comment_user_id, PDO::PARAM_INT);
-        $this->db->execute();
-    }
 
+
+
+    public function createComment($ticketId, $userId, $commentText) {
+        $query = "INSERT INTO comment (comment, ticket_id, user_id) VALUES (:comment, :ticket_id, :user_id)";
+        $this->db->query($query);
+        $this->db->bind(':comment', $commentText);
+        $this->db->bind(':ticket_id', $ticketId);
+        $this->db->bind(':user_id', $userId);
+
+        return $this->db->execute(); // Assuming you have a method like execute() to perform the query
+    }
 }
