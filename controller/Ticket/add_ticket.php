@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $tagManager->assignTagsToTicket($ticketId, $selectedTags);
 
 
-        header("location: ../../../controller/Ticket/display_tickets.php");
+        header("location: display_tickets.php");
         exit();
     } else {
         // Error adding the ticket

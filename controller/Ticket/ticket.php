@@ -1,17 +1,28 @@
 <?php
 require_once "../../model/Ticket.php";
 require_once "../../model/User.php";
-
+require_once "../../model/Comment.php";
 require_once "../../view/inc/sidebar.php";
 
-
-// Create an instance of the Ticket class
 $ticketModel = new Ticket();
+$commentModel = new Comment();
 
 $ticketID = $_GET['id'];
 
 // Assuming you have a method to retrieve ticket details from the database
 $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
+$userID = $ticketDetails['user_id'];
+
+// Check if the form is submitted to create a new comment
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comment_text'])) {
+    $commentText = $_POST['comment_text'];
+
+    // Create the comment using the Comment class method
+    $commentModel->createComment($ticketID, $userID, $commentText);
+}
+
+// Retrieve comments for the ticket
+$comments = $commentModel->getCommentsForTicket($ticketID);
 
 ?>
 <!doctype html>
@@ -21,7 +32,6 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 </head>
 <body class="h-screen overflow-hidden flex items-center justify-center">
@@ -72,18 +82,20 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
                 </li>
             </ul>
         </section>
-        <section class="mt-6 border rounded-xl bg-gray-50 mb-3">
-            <textarea class="w-full bg-gray-50 p-2 rounded-xl" placeholder="Type your comment here..." rows="3"></textarea>
-            <div class="flex items-center justify-between p-2">
-                <button class="h-6 w-6 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                    </svg>
-                </button>
-                <button class="bg-blue-500 hover:bg-blue-700  text-white font-bold px-4 py-2 rounded">Reply</button>
-            </div>
-        </section>
+        <form id="commentForm" class="comment-form" method="post" action="">
+            <section class="mt-6 border rounded-xl bg-gray-50 mb-3">
+                <textarea class="w-full bg-gray-50 p-2 rounded-xl"  name="comment_text" placeholder="Type your comment here..." rows="3"></textarea>
+                <div class="flex items-center justify-between p-2">
+                    <button class="h-6 w-6 text-gray-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                        </svg>
+                    </button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700  text-white font-bold px-4 py-2 rounded">Reply</button>
+                </div>
+            </section>
+        </form>
     </section>
     <!--   End Left section  -->
 
@@ -114,75 +126,93 @@ $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
             </div>
         </div>
         <!-- Header End  -->
-        <!-- Comment section -->
+        <!-- Comment section mt-6 border rounded-xl bg-gray-50 mb-3 -->
 
-       <div class="comment-section">
-           <div class="comment"></div>
-       </div>
+        <section class="comment-section ">
+        </section>
     </section>
     <!--   End Right  section  -->
 </main>
-<script>
-    let commentSection = document.querySelector('#comment-section');
-    let commentInput = document.querySelector('#comment');
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    function ajaxCall(commentValue, userValue, ticketValue) {
-        $.ajax({
-            type: 'POST',
-            url: '../Comment/create_comment.php',
-            data: {
-                comment: commentValue,
-                user_id: userValue,
-                ticket_id: ticketValue,
-            },
-            success: function(data) {
-                    try {
-                        commentsData = JSON.parse(data);
-                        console.log(commentsData);
+<script type="text/javascript">
 
-                console.log(commentsData);
-                commentSection.innerHTML = "";
-                for (let i = 0; i < commentsData.length; i++) {
-                    commentText = commentsData[i].comment;
-                    commentCreator = commentsData[i].user;
-                    picture = commentsData[i].picture;
-                    commentSection.innerHTML += `
-                    <div class="flex p-2">
-                        <img src="${picture}"
-                            class="h-10 w-10 rounded-full mr-2 object-cover border-2 border-yellow-500" />
-                        <div>
-                            <h1 class="font-bold text-gray-700 text-sm">${commentCreator}</h1>
-                            <!-- Comment Content Section -->
-                            <p class="text-gray-700">
-                                ${commentText}
-                            </p>
-                        </div>
-                    </div>`;
-                }
-                    } catch (e) {
-                        console.error('Error parsing JSON:', e);
-                        console.log('Response:', data);
+    $$(document).ready(function() {
+        // Function to get and display comments
+        function getComments() {
+            var ticketID = <?php echo json_encode($ticketID); ?>;
+            $.ajax({
+                type: 'GET',
+                url: 'add_comment.php',
+                data: { ticket_id: ticketID },
+                success: function(response) {
+                    // Assuming response is a JSON-encoded array of comments
+                    var comments = JSON.parse(response);
+
+                    // Clear existing comments
+                    $('.comment-section').empty();
+
+                    // Iterate through comments and update the comment section
+                    for (var i = 0; i < comments.length; i++) {
+                        var commentHTML = '<div class="single-comment">';
+                        commentHTML += '<p>' + comments[i].user + ': ' + comments[i].comment + '</p>';
+                        commentHTML += '</div>';
+
+                        $('.comment-section').append(commentHTML);
                     }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX call failed with status ' + status + ': ' + error);
+                },
+                error: function(error) {
+                    console.log(error); // Handle errors
+                }
+            });
+        }
+
+        // Call the function to get and display comments when the page loads
+        getComments();
+
+        // Attach an event handler to the form submission
+        $('#commentForm button[type="button"]').click(function() {
+            var commentText = $('#commentForm textarea[name="comment_text"]').val();
+
+            if (commentText.trim() !== '') {
+                var ticketID = <?php echo json_encode($ticketID); ?>;
+                var formData = { ticket_id: ticketID, comment_text: commentText };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'add_comment.php',
+                    data: formData,
+                    success: function(response) {
+                        // Assuming response is a JSON-encoded array of comments
+                        var comments = JSON.parse(response);
+
+                        // Clear existing comments
+                        $('.comment-section').empty();
+
+                        // Iterate through comments and update the comment section
+                        for (var i = 0; i < comments.length; i++) {
+                            var commentHTML = '<div class="single-comment">';
+                            commentHTML += '<p>' + comments[i].user + ': ' + comments[i].comment + '</p>';
+                            commentHTML += '</div>';
+
+                            $('.comment-section').append(commentHTML);
+                        }
+
+                        // Clear the text area after adding comments
+                        $('#commentForm textarea[name="comment_text"]').val('');
+                    },
+                    error: function(error) {
+                        console.log(error); // Handle errors
+                    }
+                });
             }
         });
-    }
-
-    $('#commentForm').submit(function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-        // Call the ajaxCall function
-        ajaxCall($('#comment').val(), $('#user_id').val(), $('#ticket_id').val());
-        commentInput.value = "";
     });
 
-    // Call ajaxCall immediately
-    ajaxCall();
 
-    setInterval(ajaxCall, 1000);
 </script>
+
 
 </body>
 </html>
