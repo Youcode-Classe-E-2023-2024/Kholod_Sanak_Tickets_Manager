@@ -98,6 +98,16 @@ class Tag {
             return $result;
         }
 
+        ////////////////////////////////          Add tag         /////////////////////////////////////
+    ///
+    public function addTagLibelle($tagName) {
+        $query = "INSERT INTO tag (libelle) VALUES (:tagName)";
+        $this->db->query($query);
+        $this->db->bind(':tagName', $tagName);
+        $this->db->execute();
+
+        return $this->db->lastInsertId();
+    }
 
 
 
