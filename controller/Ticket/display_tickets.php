@@ -133,11 +133,13 @@ $tickets = $ticketModel->getTickets();
                             ?>
                         </td>
 
+                        <!-- assignee -->
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
                                 <?php echo $ticket->assignee; ?>
                             </p>
                         </td>
+                        <!-- Status -->
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
@@ -210,7 +212,7 @@ $tickets = $ticketModel->getTickets();
         $('.delete-ticket').on('click', function (e) {
             e.preventDefault();
             var ticketId = $(this).data('ticket-id');
-            console.log((ticketId));
+            console.log (ticketId);
 
 
             // Confirm deletion (optional)
@@ -266,7 +268,6 @@ $tickets = $ticketModel->getTickets();
 </script>
 
 <!-- Filter -->
-
 <script type="text/javascript">
     // Define filterTickets function outside of document.ready
     function filterTickets() {
