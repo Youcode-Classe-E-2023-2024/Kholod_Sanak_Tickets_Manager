@@ -2,7 +2,6 @@
 require_once '../../config/Database.php';
 require_once "../../model/Ticket.php";
 require_once "../../model/Tag.php";
-require_once "../../model/Ticket.php";
 
 
 session_start();
