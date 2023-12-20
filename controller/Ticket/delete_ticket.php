@@ -3,8 +3,8 @@
 require_once "../../model/Ticket.php";
 
 // Check if the ticket ID is provided in the URL
-if (isset($_GET['id'])) {
-    $ticketId = $_GET['id'];
+if (isset($_POST['id'])) {
+    $ticketId = $_POST['id'];
 
     // Create an instance of the Ticket class
     $ticketModel = new Ticket();
