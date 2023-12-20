@@ -42,6 +42,7 @@ require_once "../../../model/TicketTagAssociation.php";
                                 <select
                                         id="assignee"
                                         name="assignee"
+                                        multiple
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 select2" >
                                     <!-- Fetch and display assignees from the database -->
                                     <?php
@@ -96,7 +97,7 @@ require_once "../../../model/TicketTagAssociation.php";
                                 <select
                                         id="tag"
                                         name="tag[]"
-
+                                        multiple
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 select2"
                                 >
                                     <?php
