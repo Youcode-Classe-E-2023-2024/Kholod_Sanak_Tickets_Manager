@@ -160,9 +160,19 @@ $tickets = $ticketModel->getTickets();
                                 <?php echo $ticket->due_date; ?>
                             </p>
                         </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <a href="../../view/pages/Ticket/edit_ticket_form.php?id=<?php echo $ticket->id_ticket; ?>" class="text-indigo-600 hover:underline">Edit</a>
-                            <a href="delete_ticket.php?id=<?php echo $ticket->id_ticket; ?>" class="ml-3 text-red-600 hover:underline">Delete</a>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex justify-between">
+                            <!-- Edit icon -->
+                            <a href="../../view/pages/Ticket/edit_ticket_form.php?id=<?php echo $ticket->id_ticket; ?>" class="text-indigo-600 hover:underline">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="update" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                                    <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
+                                </svg>
+
+                            </a>
+                            <!--delete icon -->
+                            <a href="delete_ticket.php?id=<?php echo $ticket->id_ticket; ?>" class="ml-3 text-red-600 hover:underline">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="delete" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                                <path d="M24.2,12.193,23.8,24.3a3.988,3.988,0,0,1-4,3.857H12.2a3.988,3.988,0,0,1-4-3.853L7.8,12.193a1,1,0,0,1,2-.066l.4,12.11a2,2,0,0,0,2,1.923h7.6a2,2,0,0,0,2-1.927l.4-12.106a1,1,0,0,1,2,.066Zm1.323-4.029a1,1,0,0,1-1,1H7.478a1,1,0,0,1,0-2h3.1a1.276,1.276,0,0,0,1.273-1.148,2.991,2.991,0,0,1,2.984-2.694h2.33a2.991,2.991,0,0,1,2.984,2.694,1.276,1.276,0,0,0,1.273,1.148h3.1A1,1,0,0,1,25.522,8.164Zm-11.936-1h4.828a3.3,3.3,0,0,1-.255-.944,1,1,0,0,0-.994-.9h-2.33a1,1,0,0,0-.994.9A3.3,3.3,0,0,1,13.586,7.164Zm1.007,15.151V13.8a1,1,0,0,0-2,0v8.519a1,1,0,0,0,2,0Zm4.814,0V13.8a1,1,0,0,0-2,0v8.519a1,1,0,0,0,2,0Z"></path></svg>
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
