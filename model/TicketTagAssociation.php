@@ -12,8 +12,8 @@ class TicketTagAssociation {
             ticket_id INT,
             tag_id INT,
             PRIMARY KEY (ticket_id, tag_id),
-            FOREIGN KEY (ticket_id) REFERENCES ticket(id_ticket),
-            FOREIGN KEY (tag_id) REFERENCES tag(id_tag)
+            FOREIGN KEY (ticket_id) REFERENCES ticket(id_ticket) ON DELETE CASCADE,
+            FOREIGN KEY (tag_id) REFERENCES tag(id_tag) ON DELETE CASCADE
         )";
 
         $this->db->query($query);
