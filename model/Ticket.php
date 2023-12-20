@@ -71,21 +71,33 @@ class Ticket {
 
     /////////////////////////////     Display ticket value        //////////////////////////////////////////
     ///
-    private function getTicketDetails($ticketId) {
+    private function getTicketDetails1($ticketId) {
         $this->db->query("SELECT * FROM ticket WHERE id_ticket = :ticketId");
         $this->db->bind(':ticketId', $ticketId);
         return $this->db->single();
     }
 
 
+    private function getTicketDetails($ticketId) {
+        $this->db->query("SELECT t.id_ticket, t.title, t.description, t.priority, t.status, t.date_ticket, t.due_date, t.assignee, t.user_id, u.id_user AS user_id
+                      FROM ticket t
+                      JOIN user u ON t.user_id = u.id_user
+                      WHERE t.id_ticket = :ticketId");
+        $this->db->bind(':ticketId', $ticketId);
+        return $this->db->single();
+    }
+
+
+
     public function getTicketAttributes($ticketId)
     {
         // Assuming you have a method to retrieve ticket details from the database
-        $ticketDetails = $this->getTicketDetails($ticketId);
+        $ticketDetails = $this->getTicketDetails1($ticketId);
 
         if ($ticketDetails) {
             // Convert the object to an array
             $ticketDetailsArray = json_decode(json_encode($ticketDetails), true);
+            //var_dump($ticketDetails);
 
             // Return ticket details as an associative array
             return $ticketDetailsArray;
@@ -117,7 +129,39 @@ class Ticket {
     }
 
 
+    //////////////////////////////         Get Ticket id       /////////////////////////:////////////////
 
+    public function getTicketById($ticketId) {
+        $this->db->query("SELECT * FROM ticket WHERE id_ticket = :ticket_id");
+        $this->db->bind(':ticket_id', $ticketId);
+
+        return $this->db->single();
+    }
+
+    ///////////////////////////////         Update ticket               /////////////////////////////////////
+    ///
+    public function updateTicket($ticketId, $title, $assignee, $dueDate, $priority, $status, $description) {
+        $this->db->query("UPDATE ticket 
+                          SET title = :title,
+                              assignee = :assignee,
+                              due_date = :due_date,
+                              priority = :priority,
+                              status = :status,
+                              description = :description
+                          WHERE id_ticket = :ticket_id");
+
+        $this->db->bind(':ticket_id', $ticketId);
+        $this->db->bind(':title', $title);
+        $this->db->bind(':assignee', $assignee);
+        $this->db->bind(':due_date', $dueDate);
+        $this->db->bind(':priority', $priority);
+        $this->db->bind(':status', $status);
+        $this->db->bind(':description', $description);
+
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
 
 
 
