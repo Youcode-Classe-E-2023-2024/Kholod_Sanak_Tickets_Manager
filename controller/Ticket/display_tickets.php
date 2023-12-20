@@ -92,6 +92,11 @@ $tickets = $ticketModel->getTickets();
                 </tr>
                 </thead>
                 <tbody>
+
+                <!-- Afficher filtre -->
+                <div id="filteredTickets">
+                </div>
+                <div id="container">
                 <?php foreach ($tickets as $ticket): ?>
                     <tr>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -156,11 +161,12 @@ $tickets = $ticketModel->getTickets();
                             </p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <a href="edit_ticket.php?id=<?php echo $ticket->id_ticket; ?>" class="text-indigo-600 hover:underline">Edit</a>
+                            <a href="../../view/pages/Ticket/edit_ticket_form.php?id=<?php echo $ticket->id_ticket; ?>" class="text-indigo-600 hover:underline">Edit</a>
                             <a href="delete_ticket.php?id=<?php echo $ticket->id_ticket; ?>" class="ml-3 text-red-600 hover:underline">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                </div>
                 </tbody>
             </table>
             <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
@@ -222,8 +228,12 @@ $tickets = $ticketModel->getTickets();
             data: { assignee: assignee },
             success: function (data) {
                 $('#filteredTickets').html(data);
+                $("#container").css("display", "none");
+
             },
             error: function () {
+                $("#container").css("display", "block");
+
                 alert('Error loading filtered tickets.');
             }
         });

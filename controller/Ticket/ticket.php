@@ -13,7 +13,9 @@ $_SESSION["ticket_id"] = $ticketID;
 
 // Assuming you have a method to retrieve ticket details from the database
 $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
+//var_dump($ticketDetails);
 $userID = $ticketDetails['user_id'];
+
 
 // Check if the form is submitted to create a new comment
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comment_text'])) {

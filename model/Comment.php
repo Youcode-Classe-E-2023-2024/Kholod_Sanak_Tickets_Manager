@@ -55,6 +55,6 @@ class Comment {
         $this->db->bind(':ticket_id', $ticketId);
         $this->db->bind(':user_id', $userId);
 
-        return $this->db->execute(); // Assuming you have a method like execute() to perform the query
+        return $this->db->execute();
     }
 }
