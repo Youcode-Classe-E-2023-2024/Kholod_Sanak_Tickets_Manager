@@ -27,13 +27,37 @@ $tickets = $ticketModel->getTickets();
 <body >
 
 <div class="absolute bg-white p-8 rounded-md  w-fit top-0 right-0">
-    <div class=" flex items-center justify-end pb-6">
-        <div class="lg:ml-40 ml-10 space-x-8">
+    <div class=" flex  justify-end pb-6">
+        <!-- Search -->
+        <div class='max-w-md mx-auto'>
+            <div class="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+                <div class="grid place-items-center h-full w-12 text-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+
+                <input
+                        class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                        type="text"
+                        id="search"
+                        placeholder="Search something.."
+                        oninput="filterTickets()" />
+            </div>
+        </div>
+        <!-- button-->
+        <div class=" ml-2 space-x-8">
             <form action="../../view/pages/Ticket/ticket_form.php" method="get">
                 <button class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer" type="submit">New Ticket</button>
             </form>
         </div>
     </div>
+
+    <!-- Afficher filtre -->
+    <div id="filteredTickets">
+    </div>
+
+
     <div>
 <div class="flex items-center justify-end">
     <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto place-content-center">
@@ -116,10 +140,10 @@ $tickets = $ticketModel->getTickets();
                                 </span>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <span class="relative inline-block px-3 py-1 font-semibold text-blue-900 leading-tight">
-                                    <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                    <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                     <div class="flex">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-blue-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-red-500">
                                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z"></path>
                                         </svg>
                                         <span class="ml-1"><?php echo $ticket->priority; ?></span>
@@ -183,5 +207,38 @@ $tickets = $ticketModel->getTickets();
         });
     });
 </script>
+
+<!-- Filter -->
+
+<script type="text/javascript">
+    // Define filterTickets function outside of document.ready
+    function filterTickets() {
+        var assignee = $("#search").val();
+        console.log(assignee);
+
+        $.ajax({
+            url: 'filter_tickets.php',
+            type: 'POST',
+            data: { assignee: assignee },
+            success: function (data) {
+                $('#filteredTickets').html(data);
+            },
+            error: function () {
+                alert('Error loading filtered tickets.');
+            }
+        });
+    }
+
+    // Wrap the rest of the code in document.ready
+    $(document).ready(function () {
+        // Use keyup event to trigger the filter function
+        $("#search").input(function () {
+            filterTickets();
+        });
+    });
+</script>
+
+
+
 </body>
 </html>
