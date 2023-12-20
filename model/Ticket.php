@@ -97,8 +97,6 @@ class Ticket {
 
 
     //////////////////////////////         Get Ticket tags        /////////////////////////:////////////////
-
-
     /////
     public function getTags($ticketId) {
         $ticketTagAssociation = new TicketTagAssociation();
@@ -108,6 +106,17 @@ class Ticket {
         return $tags;
 
     }
+
+    ///////////////////////////////      filter tickets        //////////////////////////////////////////:
+    public function getFilteredTickets($assignee)
+    {
+        $this->db->query("SELECT * FROM ticket WHERE assignee = :assignee ORDER BY id_ticket DESC");
+        $this->db->bind(':assignee', $assignee);
+
+        return $this->db->resultSet();
+    }
+
+
 
 
 
