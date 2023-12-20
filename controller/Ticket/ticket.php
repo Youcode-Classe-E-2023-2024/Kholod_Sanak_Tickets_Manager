@@ -9,6 +9,8 @@ $commentModel = new Comment();
 
 $ticketID = $_GET['id'];
 
+$_SESSION["ticket_id"] = $ticketID;
+
 // Assuming you have a method to retrieve ticket details from the database
 $ticketDetails = $ticketModel->getTicketAttributes($ticketID);
 $userID = $ticketDetails['user_id'];
@@ -92,7 +94,7 @@ $comments = $commentModel->getCommentsForTicket($ticketID);
                                   d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                         </svg>
                     </button>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700  text-white font-bold px-4 py-2 rounded">Reply</button>
+                    <div class=" submit bg-blue-500 hover:bg-blue-700  text-white font-bold px-4 py-2 rounded">Reply</div>
                 </div>
             </section>
         </form>
@@ -138,47 +140,14 @@ $comments = $commentModel->getCommentsForTicket($ticketID);
 
 <script type="text/javascript">
 
-    $$(document).ready(function() {
-        // Function to get and display comments
-        function getComments() {
-            var ticketID = <?php echo json_encode($ticketID); ?>;
-            $.ajax({
-                type: 'GET',
-                url: 'add_comment.php',
-                data: { ticket_id: ticketID },
-                success: function(response) {
-                    // Assuming response is a JSON-encoded array of comments
-                    var comments = JSON.parse(response);
+    $(document).ready(function() {
 
-                    // Clear existing comments
-                    $('.comment-section').empty();
-
-                    // Iterate through comments and update the comment section
-                    for (var i = 0; i < comments.length; i++) {
-                        var commentHTML = '<div class="single-comment">';
-                        commentHTML += '<p>' + comments[i].user + ': ' + comments[i].comment + '</p>';
-                        commentHTML += '</div>';
-
-                        $('.comment-section').append(commentHTML);
-                    }
-                },
-                error: function(error) {
-                    console.log(error); // Handle errors
-                }
-            });
-        }
-
-        // Call the function to get and display comments when the page loads
-        getComments();
-
-        // Attach an event handler to the form submission
-        $('#commentForm button[type="button"]').click(function() {
+        $('#commentForm .submit').click(function(e) {
+            e.preventDefault();
             var commentText = $('#commentForm textarea[name="comment_text"]').val();
 
             if (commentText.trim() !== '') {
-                var ticketID = <?php echo json_encode($ticketID); ?>;
-                var formData = { ticket_id: ticketID, comment_text: commentText };
-
+                var formData = {comment_text: commentText };
                 $.ajax({
                     type: 'POST',
                     url: 'add_comment.php',
@@ -189,11 +158,11 @@ $comments = $commentModel->getCommentsForTicket($ticketID);
 
                         // Clear existing comments
                         $('.comment-section').empty();
-
+                            console.log(comments);
                         // Iterate through comments and update the comment section
                         for (var i = 0; i < comments.length; i++) {
                             var commentHTML = '<div class="single-comment">';
-                            commentHTML += '<p>' + comments[i].user + ': ' + comments[i].comment + '</p>';
+                            commentHTML += '<p>' + comments[i].comment + '</p>';
                             commentHTML += '</div>';
 
                             $('.comment-section').append(commentHTML);
@@ -209,7 +178,6 @@ $comments = $commentModel->getCommentsForTicket($ticketID);
             }
         });
     });
-
 
 </script>
 
