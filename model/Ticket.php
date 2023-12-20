@@ -2,6 +2,8 @@
 
 require_once(__DIR__ . '/../config/Database.php');
 require_once 'TicketTagAssociation.php';
+require_once 'UserTicketAssociation.php';
+
 require_once 'Tag.php';
 
 
@@ -23,7 +25,7 @@ class Ticket {
             due_date VARCHAR(50) NOT NULL, 
             assignee VARCHAR(255) NOT NULL,
             user_id INT,
-            FOREIGN KEY (user_id) REFERENCES user(id_user)
+            FOREIGN KEY (user_id) REFERENCES user(id_user) ON DELETE CASCADE
         )";
 
         $this->db->query($query);
@@ -119,6 +121,16 @@ class Ticket {
 
     }
 
+    //////////////////////////////         Get Ticket users       /////////////////////////:////////////////
+    public function getUsers($ticketId) {
+        $UserTicketAssociation = new UserTicketAssociation();
+
+        $users = $UserTicketAssociation->getUsersForTicket($ticketId);
+        // print_r($tags);
+        return $users;
+
+    }
+
     ///////////////////////////////      filter tickets        //////////////////////////////////////////:
     public function getFilteredTickets($assignee)
     {
@@ -170,7 +182,7 @@ class Ticket {
 
         $this->db->execute();
 
-        return $this->db->rowCount(); // Assuming you have a rowCount method in your database class
+        return $this->db->rowCount();
     }
 
 
