@@ -163,6 +163,15 @@ class Ticket {
         return $this->db->rowCount();
     }
 
+    //////////////////////////////////       Delete Ticket       //////////////////////////////////////////
+    public function deleteTicket($ticketId) {
+        $this->db->query("DELETE FROM ticket WHERE id_ticket = :ticket_id");
+        $this->db->bind(':ticket_id', $ticketId);
+
+        $this->db->execute();
+
+        return $this->db->rowCount(); // Assuming you have a rowCount method in your database class
+    }
 
 
 
